@@ -4,15 +4,17 @@ const path = require("path");
 
 const app = express();
 
+app.use(express.json()); // for parsing application/json
+
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-/**** 
- * 
- * 
+/****
+ *
+ *
  * Other routes here....
  *
- * 
+ *
  */
 
 app.listen(process.env.PORT);
