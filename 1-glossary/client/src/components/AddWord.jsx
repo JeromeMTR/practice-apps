@@ -11,7 +11,6 @@ class AddWord extends React.Component {
   // function that gets current word and sets state for it
   changeWord(e) {
     this.setState({word: e.target.value});
-    console.log(this.state);
   }
 
   // function that posts word to server
@@ -23,8 +22,8 @@ class AddWord extends React.Component {
   render () {
     return (
      <form>
-      <input onChange={this.changeWord.bind(this)}></input>
-      <button onClick={this.add.bind(this)}></button>
+      <input type="text" onChange={this.changeWord.bind(this)}></input>
+      <button onClick={this.add.bind(this)}>ADD WORD</button>
      </form>
     )
   }

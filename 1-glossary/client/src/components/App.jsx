@@ -1,5 +1,5 @@
 import React from "react";
-import WordList from './WordList.jsx'
+import Glossary from './Glossary.jsx'
 import AddWord from './AddWord.jsx'
 const axios = require('axios');
 
@@ -7,16 +7,22 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: []
+      glossary: ['words', 'yay', 'wow', 'more']
     };
   }
 
   //retrieve words from server function
+  get() {
+    axios.get('http://localhost:3000/')
+      .then(response => this.setState({words: response}));
+  }
+
+
 
   //post word to server function
-  post () {
+  post (word) {
     // axios.post('http://localhost:3000/', {
-    //   word: text
+    //   data: text
     // })
     //   .then((response) => {
     //     console.log(response);
@@ -33,7 +39,7 @@ class App extends React.Component {
       <div>
         <p>Hello, World!</p>
         <AddWord add={this.post.bind(this)}/>
-        <WordList words/>
+        <Glossary glossary={this.state.glossary}/>
       </div>
     )
   }
