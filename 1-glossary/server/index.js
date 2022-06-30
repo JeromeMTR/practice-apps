@@ -11,12 +11,23 @@ app.use(express.json()); // for parsing application/json
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 
-app.get(/* endpoint */ (req, res) => {
-
+app.get('/glossary', (req, res) => {
+  db.get((err, glossary) => {
+    if (err) {
+      res.status(503).end();
+    }
+    res.status(200).json(glossary);
+  })
 })
 
-app.post(/* endpoint */ (req, res) => {
-
+app.post('/glossary', (req, res) => {
+  let obj = req.body;
+  db.insert(obj, (err) => {
+    if (err) {
+      res.status(503).end();
+    }
+    res.status(201).end();
+  })
 })
 
 app.listen(process.env.PORT);

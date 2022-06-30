@@ -13,20 +13,20 @@ const glossarySchema = mongoose.Schema({
 
 const Glossary = mongoose.model('Glossary', glossarySchema);
 
-
 let get = (callback=()=> {}) => {
   Glossary.find({}, (err, words) => {
     if (err) {
       callback(err)
       return;
     }
-    console.log(words)
+    callback(null, words);
   })
 
 }
 
 let insert =  (wordObj, callback=()=>{}) => {
   // going to have two properties in argument
+  console.log('this is wordObj', wordObj.replacement)
   if (wordObj.replacement === undefined) {
     const word = new Glossary(wordObj)
     word.save((err) => {
@@ -36,6 +36,7 @@ let insert =  (wordObj, callback=()=>{}) => {
   } else {
     let old = {word: wordObj.word}
     let replacement = {word: wordObj.replacement}
+    console.log(replacement)
     Glossary.findOneAndUpdate(old, replacement, callback);
   }
 }
@@ -47,7 +48,7 @@ let insert =  (wordObj, callback=()=>{}) => {
 //   word: 'hello',
 //   replacement: 'your time is now'
 // });
-get();
+// get();
 
 
 module.exports.get = get;
