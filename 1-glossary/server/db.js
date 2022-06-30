@@ -27,7 +27,6 @@ let get = (callback=()=> {}) => {
 
 let insert =  (wordObj, callback=()=>{}) => {
   // going to have two properties in argument
-  console.log('this is wordObj', wordObj)
   if (wordObj.replacement === undefined) {
     const word = new Glossary(wordObj)
     return word.save()
@@ -42,7 +41,6 @@ let insert =  (wordObj, callback=()=>{}) => {
 }
 
 let rm = (wordObj, callback=()=> {}) => {
-  console.log(wordObj);
   return Glossary.findOneAndDelete(wordObj);
 }
 
@@ -53,6 +51,7 @@ let rm = (wordObj, callback=()=> {}) => {
 //   word: 'hello',
 //   replacement: 'your time is now'
 // });
+get()
 
 module.exports.get = get;
 module.exports.insert = insert;

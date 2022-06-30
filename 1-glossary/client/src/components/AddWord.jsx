@@ -21,14 +21,26 @@ class AddWord extends React.Component {
   // function that posts word to server
   add(e) {
     e.preventDefault()
-    this.props.add(this.state);
+    if (this.state.definition.length === 0) {
+      alert ('Oh silly, add a DEFINITION NOW!')
+    } else {
+      this.props.add(this.state);
+    }
   }
 
   render () {
     return (
      <form>
-      <input type="text" onChange={this.changeWord.bind(this, event, 'word')}></input>
-      <input type="text" onChange={this.changeWord.bind(this, event)}></input>
+      <input
+        type="text"
+        onChange={this.changeWord.bind(this, event, 'word')}
+        placeholder="Add Word Silly Goose">
+      </input>
+      <input
+      type="text"
+      onChange={this.changeWord.bind(this, event)}
+      placeholder="Add a definition silly">
+      </input>
       <button onClick={this.add.bind(this)}>ADD WORD</button>
      </form>
     )

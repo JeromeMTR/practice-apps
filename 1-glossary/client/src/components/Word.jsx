@@ -14,16 +14,26 @@ class Word extends React.Component {
     console.log(this.state.currentWord)
   }
 
+  rm () {
+    console.log(this.props.word);
+    this.props.rm(this.props.word);
+  }
+
   componentDidMount() {
     this.setState({currentWord: this.props.word});
   }
 
+
   render () {
     return (
-      <div>
-          <button >{this.props.word}</button>
-          {this.props.def}
-      </div>
+      <li>
+        <button onClick={this.rm.bind(this)}>Delete</button>
+        <button >Edit</button>
+        <ul>
+          <div>Word : {this.props.word}</div>
+          <div>  Definition : {this.props.def}</div>
+        </ul>
+      </li>
     )
   }
 }

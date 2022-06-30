@@ -13,6 +13,13 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 const handleResponse = (res, data, code) => res.status(code).send(data);
 const handleError = (res, err) => res.status(500).send(err);
 
+app.post('/glossary', (req, res) => { // promises ex:
+  let obj = req.body;
+  db.insert(obj)
+    .then(() => handleResponse(res, '', 201))
+    .catch(err => handleError(res, err))
+})
+
 app.get('/glossary', (req, res) => {
   db.get((err, glossary) => { //callback ex:
     if (err) {
@@ -22,15 +29,10 @@ app.get('/glossary', (req, res) => {
   })
 })
 
-app.post('/glossary', (req, res) => { // promises ex:
-  let obj = req.body;
-  db.insert(obj)
-    .then(() => handleResponse(res, '', 201))
-    .catch(err => handleError(res, err))
-})
-
 app.delete('/glossary', (req, res) => {
+  console.log(req);
   let obj = req.body;
+  console.log(obj);
   db.rm(obj)
     .then(words => handleResponse(res, words, 202))
     .catch(err => handleError(res, err));

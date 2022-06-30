@@ -4,69 +4,65 @@ import AddWord from './AddWord.jsx'
 import SearchWord from './SearchWord.jsx'
 const axios = require('axios');
 
+const server = 'http://localhost:3000/glossary';
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       glossary: ['words', 'yay', 'wow', 'more'],
-      filetred: []
+      allData: []
     };
   }
 
   //retrieve words from server function
   get() {
-    return axios.get('http://localhost:3000/glossary')
-      .then(response => this.setState({glossary: response.data}));
+    return axios.get(server)
+      .then(response => this.setState({
+        glossary: response.data,
+        allData: response.data
+      }));
   }
-
-
 
   //post word to server function
   post (word) {
-    return axios.post('http://localhost:3000/glossary', word
-    )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch
-    // console.log('posted');
+    return axios.post(server, word)
+      .catch(err => alert ('already in gloassay'))
   }
 
-  // change state of edited word function
-  // update (word) {
-    //  Promise.all[post(word), get()]
-    //   .then(results => {
-      //     console.log(results[1]);
-      //   })
-      // }
+  // reset to home page of glossary
+  home () {
+    this.setState({glossary: this.state.allData});
+  }
+
+  // filter page to results of search word
   search (word) {
     var copy = [];
-    this.state.glossary.forEach(glossaryWord => {
-      console.log(word);
-      console.log(glossaryWord.word)
-      console.log(glossaryWord.word.includes(word))
+    this.state.allData.forEach(glossaryWord => {
       if (glossaryWord.word.includes(word)) {
         copy.push(glossaryWord);
       }
     })
-    console.log(copy);
-    this.setState({filetred: copy});
+    this.setState({glossary: copy});
+  }
+
+  // delete word from glossary
+  rm (text) {
+    let obj = {word: text};
+    return axios.delete(server, {data: obj})
+      .then(this.get.bind(this))
   }
 
   componentDidMount() {
     this.get.call(this)
-    .then(() => {
-      console.log(this.state.glossary)
-    })
   }
 
   render() {
     return (
       <div>
-        <p>Glossary</p>
+        <h1 className="glossary-title" onClick={this.home.bind(this)}>Glossary</h1>
         <SearchWord search={this.search.bind(this)}/>
         <AddWord add={this.post.bind(this)}/>
-        <Glossary glossary={this.state.glossary}/>
+        <Glossary glossary={this.state.glossary} rm={this.rm.bind(this)}/>
       </div>
     )
   }

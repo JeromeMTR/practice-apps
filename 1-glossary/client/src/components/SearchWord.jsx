@@ -20,8 +20,9 @@ class SearchWord extends React.Component {
   render() {
     return (
       <form>
-        <input onChange={this.changeHandler.bind(this)}></input>
-        <button onClick={this.search.bind(this)}>Search Here</button>
+        <input onChange={this.changeHandler.bind(this)}
+        placeholder="So silly, SEARCH HERE!"></input>
+        <button onClick={this.search.bind(this)}>Search</button>
       </form>
     )
   }
