@@ -10,9 +10,11 @@ app.use(express.json()); // for parsing application/json
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
+const handleResponse = (res, data, code) => res.status(code).send(data);
+const handleError = (res, err) => res.status(500).send(err);
 
 app.get('/glossary', (req, res) => {
-  db.get((err, glossary) => {
+  db.get((err, glossary) => { //callback ex:
     if (err) {
       res.status(503).end();
     }
@@ -20,14 +22,18 @@ app.get('/glossary', (req, res) => {
   })
 })
 
-app.post('/glossary', (req, res) => {
+app.post('/glossary', (req, res) => { // promises ex:
   let obj = req.body;
-  db.insert(obj, (err) => {
-    if (err) {
-      res.status(503).end();
-    }
-    res.status(201).end();
-  })
+  db.insert(obj)
+    .then(() => handleResponse(res, '', 201))
+    .catch(err => handleError(res, err))
+})
+
+app.delete('/glossary', (req, res) => {
+  let obj = req.body;
+  db.rm(obj)
+    .then(words => handleResponse(res, words, 202))
+    .catch(err => handleError(res, err));
 })
 
 app.listen(process.env.PORT);

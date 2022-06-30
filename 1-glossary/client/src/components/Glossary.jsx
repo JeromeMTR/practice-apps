@@ -1,13 +1,21 @@
 import React from "react";
 import Word from "./Word.jsx";
 
-const Glossary = (props) => {
-  return <div>
-    {props.glossary.map((word, i) =>
-      <Word word={word} key={i}/>
-    )}
-    </div>
+class Glossary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentWord: ''
+    }
+  }
+  render() {
+    return <div>
+      {this.props.glossary.map((wordObj, i) =>
+        <Word word={wordObj.word} def={wordObj.definition} key={i}/>
+      )}
+      </div>
 
+  }
 }
 
 export default Glossary;

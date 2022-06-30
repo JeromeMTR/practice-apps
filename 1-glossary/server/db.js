@@ -8,7 +8,8 @@ const glossarySchema = mongoose.Schema({
   word: {
     type: String,
     unique: true
-  }
+  },
+  definition: String
 });
 
 const Glossary = mongoose.model('Glossary', glossarySchema);
@@ -26,19 +27,23 @@ let get = (callback=()=> {}) => {
 
 let insert =  (wordObj, callback=()=>{}) => {
   // going to have two properties in argument
-  console.log('this is wordObj', wordObj.replacement)
+  console.log('this is wordObj', wordObj)
   if (wordObj.replacement === undefined) {
     const word = new Glossary(wordObj)
-    word.save((err) => {
-      callback(err)
-      return;
-    })
+    return word.save()
   } else {
     let old = {word: wordObj.word}
-    let replacement = {word: wordObj.replacement}
-    console.log(replacement)
-    Glossary.findOneAndUpdate(old, replacement, callback);
+    let replacement = {
+      word: wordObj.replacement,
+      definition: wordObj.definition
+    }
+    return Glossary.findOneAndUpdate(old, replacement);
   }
+}
+
+let rm = (wordObj, callback=()=> {}) => {
+  console.log(wordObj);
+  return Glossary.findOneAndDelete(wordObj);
 }
 
 // 3. Export the models
@@ -48,8 +53,7 @@ let insert =  (wordObj, callback=()=>{}) => {
 //   word: 'hello',
 //   replacement: 'your time is now'
 // });
-// get();
-
 
 module.exports.get = get;
 module.exports.insert = insert;
+module.exports.rm = rm;
