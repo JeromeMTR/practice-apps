@@ -27,15 +27,20 @@ let get = (callback=()=> {}) => {
 
 let insert =  (wordObj, callback=()=>{}) => {
   // going to have two properties in argument
-  if (wordObj.replacement === undefined) {
+  if (wordObj.wordEdit === undefined) {
     const word = new Glossary(wordObj)
     return word.save()
   } else {
-    let old = {word: wordObj.word}
-    let replacement = {
-      word: wordObj.replacement,
-      definition: wordObj.definition
+    console.log(wordObj);
+    let old = {
+      word: wordObj.word
     }
+
+    let replacement = {
+      word: wordObj.wordEdit,
+      definition: wordObj.defEdit
+    }
+    console.log(replacement, old)
     return Glossary.findOneAndUpdate(old, replacement);
   }
 }

@@ -9,10 +9,14 @@ class Glossary extends React.Component {
     }
   }
   render() {
-    console.log(this.props);
     return <div>
       {this.props.glossary.map((wordObj, i) =>
-        <Word word={wordObj.word} def={wordObj.definition} rm={this.props.rm} key={i}/>
+        <Word
+          word={wordObj.word}
+          def={wordObj.definition}
+          rm={this.props.rm}
+          edit={this.props.edit}
+          key={i}/>
       )}
       </div>
 

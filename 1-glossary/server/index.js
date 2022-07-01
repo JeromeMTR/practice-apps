@@ -29,10 +29,8 @@ app.get('/glossary', (req, res) => {
   })
 })
 
-app.delete('/glossary', (req, res) => {
-  console.log(req);
+app.delete('/glossary', (req, res) => { //promise ex:
   let obj = req.body;
-  console.log(obj);
   db.rm(obj)
     .then(words => handleResponse(res, words, 202))
     .catch(err => handleError(res, err));

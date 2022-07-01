@@ -21,8 +21,8 @@ class AddWord extends React.Component {
   // function that posts word to server
   add(e) {
     e.preventDefault()
-    if (this.state.definition.length === 0) {
-      alert ('Oh silly, add a DEFINITION NOW!')
+    if (this.state.definition.length === 0 || this.state.word.length === 0) {
+      alert ('Oh silly, left an INPUT BLANK!')
     } else {
       this.props.add(this.state);
     }

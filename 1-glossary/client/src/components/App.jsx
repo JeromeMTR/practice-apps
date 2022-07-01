@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      glossary: ['words', 'yay', 'wow', 'more'],
+      glossary: [],
       allData: []
     };
   }
@@ -20,13 +20,18 @@ class App extends React.Component {
       .then(response => this.setState({
         glossary: response.data,
         allData: response.data
-      }));
+      }))
+      .catch(err => console.log('err'));
   }
 
   //post word to server function
   post (word) {
-    return axios.post(server, word)
-      .catch(err => alert ('already in gloassay'))
+    console.log(word);
+    if (word.length !== 0) {
+      return axios.post(server, word)
+      .then(this.get())
+      .catch(err => alert ('already in glossary'))
+    }
   }
 
   // reset to home page of glossary
@@ -43,6 +48,14 @@ class App extends React.Component {
       }
     })
     this.setState({glossary: copy});
+  }
+
+  // edit word and definition
+  edit(editObj) {
+
+    // console.log(this.post.call(this, editObj))
+    this.post.call(this, editObj)
+      .then(this.get.bind(this));
   }
 
   // delete word from glossary
@@ -62,7 +75,10 @@ class App extends React.Component {
         <h1 className="glossary-title" onClick={this.home.bind(this)}>Glossary</h1>
         <SearchWord search={this.search.bind(this)}/>
         <AddWord add={this.post.bind(this)}/>
-        <Glossary glossary={this.state.glossary} rm={this.rm.bind(this)}/>
+        <Glossary
+          glossary={this.state.glossary}
+          rm={this.rm.bind(this)}
+          edit={this.edit.bind(this)}/>
       </div>
     )
   }
