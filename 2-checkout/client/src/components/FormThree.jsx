@@ -4,32 +4,57 @@ class FormThree extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
-      formTwo: {
-        line1: '',
-        line2: '',
-        city: '',
-        state: '',
-        zipcode: ''
+        creditCard: '',
+        expirationDate: '',
+        cvv: '',
+        billingCode: ''
       }
-    };
-    this.submitHandler = this.submitHandler.bind(this);
+    this.showCheckout = this.showCheckout.bind(this);
   }
 
-  submitHandler(e) {
+  showCheckout(e) {
     e.preventDefault()
+    for (let key in this.state) {
+      if (this.state[key].length === 0) {
+        return alert (`${key} is missing`);
+      }
+    }
+    this.props.showPurchase('showFormThree', 'purchase');
+    this.props.lift(this.state, 'form3');
   }
 
 
   render() {
     return(
-      <form onSubmit={this.submitHandler}>
-        <p>Credit Card Number : </p><input type="text"></input>
-        <p>Exipiration Date : </p><input type="text"></input>
-        <p>CVV : </p><input type="text"></input>
-        <p>Billing Zip Code : </p><input type="text"></input>
+      <div><h2>Card Information</h2>
+      <form onSubmit={this.showCheckout}>
+        <p>Credit Card Number : </p>
+        <input
+          type="text"
+          onChange={e => this.props.onChange.call(this, e, 'creditCard')}
+          >
+        </input>
+        <p>Exipiration Date : </p>
+        <input
+          type="text"
+          onChange={e => this.props.onChange.call(this, e, 'expirationDate')}
+          >
+        </input>
+        <p>CVV : </p>
+        <input
+          type="text"
+          onChange={e => this.props.onChange.call(this, e, 'cvv')}
+        >
+        </input>
+        <p>Billing Zip Code : </p>
+        <input
+          type="text"
+          onChange={e => this.props.onChange.call(this, e, 'billingCode')}
+        >
+        </input>
         <input type="submit" value="next"></input>
       </form>
+      </div>
     )
   }
 }

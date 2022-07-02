@@ -10,42 +10,39 @@ class FormOne extends React.Component {
         password: ''
     };
     this.showFormTwo = this.showFormTwo.bind(this);
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(e, inputBar) {
-    if (inputBar === 'username') {
-      this.setState({username: e.target.value});
-    }
-    if (inputBar === 'email') {
-      this.setState({email: e.target.value});
-    }
-    if (inputBar === 'password') {
-      this.setState({password: e.target.value});
-    }
   }
 
   showFormTwo(e) {
     e.preventDefault();
     for (let key in this.state) {
       if (this.state[key].length === 0) {
-        return alert ('missing input');
+        return alert (`${key} is missing`);
       }
     }
-    this.props.lift(this.state);
-    this.props.showFormTwo();
+    this.props.showFormTwo('showFormOne', 'showFormTwo'); // none blocking asychronous
+    this.props.lift(this.state, 'form1');
   }
 
   render() {
     return(
       <div>
+        <h2>CREATE ACCOUNT</h2>
         <form onSubmit={this.showFormTwo}>
-          {/* <label>Username : </label><input type="text"></input><p></p>
-          <label>Email : </label><input type="text"></input><p></p>
-          <label>Password : </label><input type="text"></input><p></p> */}
-          <p>Username : </p><input type="text" onChange={(e) => this.onChange(e, 'username')}></input>
-          <p>Email : </p><input type="text" onChange={(e) => this.onChange(e, 'email')}></input>
-          <p>Password : </p><input type="text" onChange={(e) => this.onChange(e, 'password')}></input>
+          <p>Username : </p>
+          <input
+            type="text"
+            onChange={(e) => this.props.onChange.call(this, e, 'username')}>
+          </input>
+          <p>Email : </p>
+          <input
+            type="text"
+            onChange={(e) => this.props.onChange.call(this, e, 'email')}>
+          </input>
+          <p>Password : </p>
+          <input
+            type="text"
+            onChange={(e) => this.props.onChange.call(this, e, 'password')}>
+          </input>
           <input type="submit" value="next"></input>
         </form>
       </div>
