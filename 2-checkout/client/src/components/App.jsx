@@ -9,15 +9,20 @@ class App extends React.Component {
     this.state = {
       showFormOne: false,
       showFormTwo: false,
-      showFormThree: false,
+      showFormThree: false
     };
     this.showFormOne = this.showFormOne.bind(this);
+    this.showForm = this.showForm.bind(this);
     this.showFormTwo = this.showFormTwo.bind(this);
     this.showFormThree = this.showFormThree.bind(this);
+    this.liftState = this.liftState.bind(this);
   }
 
   showFormOne() {
-    return this.setState({showFormOne: !this.state.showFormOne});
+    this.setState({showFormOne: !this.state.showFormOne});
+  }
+  showForm() {
+    this.setState({showFormThree: !this.state.showFormThree});
   }
 
   showFormTwo() {
@@ -32,17 +37,27 @@ class App extends React.Component {
     });
   }
 
+  liftState(componentState, form) {
+    for (var key in componentState) {
+      let obj = {};
+      obj[key] = componentState[key];
+      this.setState(obj, ()=> {
+        console.log(this.state);
+      })
+    }
+  }
+
 
   render() {
     let showFormOne, showFormTwo, showFormThree;
-    if (this.state.showFormOne) {
-      showFormOne = (<FormOne showFormTwo={this.showFormTwo}/>)
+    if (this.state.showFormOne && (this.state.showFormTwo === this.state.showFormThree)) {
+      showFormOne = (<FormOne showFormTwo={this.showFormTwo} lift={this.liftState}/>)
     }
     if (this.state.showFormTwo) {
       showFormTwo = (<FormTwo showFormThree={this.showFormThree}/>)
     }
     if (this.state.showFormThree) {
-      showFormThree = (<FormThree/>)
+      showFormThree = (<FormThree showForm={this.showForm}/>)
     }
 
     return(

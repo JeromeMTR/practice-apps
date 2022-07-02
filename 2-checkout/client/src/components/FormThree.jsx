@@ -13,12 +13,17 @@ class FormThree extends React.Component {
         zipcode: ''
       }
     };
+    this.submitHandler = this.submitHandler.bind(this);
+  }
+
+  submitHandler(e) {
+    e.preventDefault()
   }
 
 
   render() {
     return(
-      <form>
+      <form onSubmit={this.submitHandler}>
         <p>Credit Card Number : </p><input type="text"></input>
         <p>Exipiration Date : </p><input type="text"></input>
         <p>CVV : </p><input type="text"></input>
