@@ -26,7 +26,6 @@ class App extends React.Component {
 
   //post word to server function
   post (word) {
-    console.log(word);
     if (word.length !== 0) {
       return axios.post(server, word)
       .then(this.get())
@@ -52,8 +51,6 @@ class App extends React.Component {
 
   // edit word and definition
   edit(editObj) {
-
-    // console.log(this.post.call(this, editObj))
     this.post.call(this, editObj)
       .then(this.get.bind(this));
   }

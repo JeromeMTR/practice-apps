@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json()); // for parsing application/json
 
 // Serves up all static and generated assets in ../client/dist.
-app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist"))); //
 
 const handleResponse = (res, data, code) => res.status(code).send(data);
 const handleError = (res, err) => res.status(500).send(err);

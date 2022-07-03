@@ -72,8 +72,8 @@ class Word extends React.Component {
         </li>
         Definition : {this.props.def}
         <div>
-        <button onClick={this.show.bind(this)}>Edit</button>
         {showForm}
+        <button onClick={this.show.bind(this)}>Edit</button>
         <button onClick={this.rm.bind(this)}>Delete</button>
         </div>
 
