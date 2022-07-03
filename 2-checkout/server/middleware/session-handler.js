@@ -16,6 +16,7 @@ module.exports = (req, res, next) => {
       let token = cookie.slice(index + 1);
       cookies[key] = token;
     }
+    console.log(cookies);
     return cookies;
   }, {});
 

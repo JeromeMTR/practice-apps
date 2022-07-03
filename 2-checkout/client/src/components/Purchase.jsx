@@ -11,6 +11,7 @@ class Purchase extends React.Component {
   // does a post request
   purchase(e) {
     e.preventDefault()
+    this.props.homepage('purchase', 'checkout');
     this.props.post()
   }
 

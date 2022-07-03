@@ -27,7 +27,7 @@ class App extends React.Component {
       form3: this.state.form3,
     };
 
-    axios.post('http://localhost:8080', allForms)
+    axios.post('http://localhost:8080/checkout', allForms)
       .then(() => {
         this.setState({
           checkout: !this.state.checkout,
@@ -41,24 +41,19 @@ class App extends React.Component {
     let obj = {};
     obj[oldForm] = !this.state[oldForm];
     obj[newForm] = !this.state[newForm];
-    console.log(obj);
     return this.setState(obj);
   }
 
   liftState(componentState, form) {
     let obj = {};
     obj[form] = componentState;
-    this.setState(obj, () => {
-      console.log(this.state);
-    });
+    this.setState(obj);
   }
 
   onChange(e, inputBar) {
-    let obj = {}
+    let obj = {};
     obj[inputBar] = e.target.value;
-    this.setState(obj, ()=> {
-      console.log(this.state);
-    })
+    this.setState(obj)
   }
 
   render() {
@@ -67,7 +62,6 @@ class App extends React.Component {
     if (this.state.checkout) {
       checkout = (<button onClick={this.nextForm.bind(this, 'checkout', 'showFormOne')}>CHECKOUT</button>);
     }
-
     if (this.state.showFormOne && (this.state.showFormTwo === this.state.showFormThree)) {
       showFormOne = (<FormOne
         showFormTwo={this.nextForm}
@@ -92,6 +86,7 @@ class App extends React.Component {
     if (this.state.purchase) {
       purchase =(<Purchase
         post={this.post}
+        homepage={this.nextForm}
         form1={this.state.form1}
         form2={this.state.form2}
         form3={this.state.form3}

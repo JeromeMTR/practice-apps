@@ -1,25 +1,46 @@
+
+DROP DATABASE checkout;
 CREATE DATABASE checkout;
 
 use checkout;
 
 -- create tables and
-CREATE TABLE account (
-  username VARCHAR(225) NOT NULL,
-  email VARCHAR(225),
-  pass VARCHAR(225)
+CREATE TABLE Summary (
+  cookie varchar(250) NOT NULL UNIQUE,
+  username VARCHAR(25) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  passwords VARCHAR(25) NOT NULL,
+  line1 VARCHAR(50) NOT NULL,
+  line2 VARCHAR(50) NOT NULL,
+  city VARCHAR(25) NOT NULL,
+  street VARCHAR(50) NOT NULL,
+  zipcode INT(10) NOT NULL,
+  cards BIGINT(20) NOT NULL,
+  expiration_date DATE NOT NULL,
+  cvv INT(5) NOT NULL,
+  billing_zip INT(10) NOT NULL,
+  primary key(cookie)
 )
 
-CREATE TABLE addresses (
-  line1 VARCHAR(50),
-  line2 VARCHAR(50),
-  city VARCHAR(50),
-  street VARCHAR(50),
-  zipcode int(10),
-)
+-- CREATE TABLE users (
+--   id string INT NOT NULL AUTO_INCREMENT,
+--   session_id string NOT NULL UNIQUE,
+--   username VARCHAR(25) NOT NULL,
+--   email VARCHAR(50) NOT NULL,
+--   password VARCHAR(25) NOT NULL
+-- )
 
-CREATE TABLE  (
-  cardNumber VARCHAR(225),
-  expirationDate VARCHAR(225),
-  cvv VARCHAR(225)
-  zipcode VARCHAR(225)
-)
+-- CREATE TABLE addresses (
+--   line1 VARCHAR(50) NOT NULL,
+--   line2 VARCHAR(50) NOT NULL,
+--   city VARCHAR(25) NOT NULL,
+--   street VARCHAR(50) NOT NULL,
+--   zipcode INT(15) NOT NULL
+-- )
+
+-- CREATE TABLE cards (
+--   card INT(20) NOT NULL,
+--   expiration_date DATE NOT NULL,
+--   cvv VARCHAR(10) NOT NULL,
+--   billing_zip VARCHAR(15) NOT NULL
+-- )
