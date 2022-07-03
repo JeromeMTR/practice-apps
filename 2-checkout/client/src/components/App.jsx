@@ -34,7 +34,7 @@ class App extends React.Component {
           purchase: !this.staet.purchase
         })
       })
-      .catch(err => console.log('lol restart your form bc you suck'))
+      .catch(err => console.log(err))
   }
 
   nextForm(oldForm, newForm) {

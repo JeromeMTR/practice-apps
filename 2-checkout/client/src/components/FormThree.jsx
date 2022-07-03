@@ -37,6 +37,7 @@ class FormThree extends React.Component {
         <p>Exipiration Date : </p>
         <input
           type="text"
+          placeholder="yyyy-mm-dd"
           onChange={e => this.props.onChange.call(this, e, 'expirationDate')}
           >
         </input>

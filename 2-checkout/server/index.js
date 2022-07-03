@@ -22,16 +22,17 @@ app.use(logger);
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.post('/checkout', (req, res) => {
-  console.log(req.session_id.length);
   let placeHolder = [req.session_id];
+
   for (var key in req.body) {
     for (var label in req.body[key]) {
       placeHolder.push(req.body[key][label]);
     }
   }
-  console.log(placeHolder);
+
   db.queryAsync('INSERT INTO Summary  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', placeHolder)
-    .then(() => res.status(201).end());
+    .then(() => res.status(201).end())
+    .catch(err => res.status(502).json(err));
 });
 
 app.listen(process.env.PORT);
